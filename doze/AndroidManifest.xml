@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cyanogenmod.settings.doze"
-    android:versionCode="1"
-    android:versionName="1.0"
-    android:sharedUserId="android.uid.system">
+    package="com.gestures.settings.device"
+    android:sharedUserId="android.uid.system"
+    >
 
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="cyanogenmod.permission.MANAGE_REMOTE_PREFERENCES" />
 
-    <uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="24"/>
+    <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <application
-        android:label="@string/device_settings_app_name"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Gestures"
         android:persistent="true">
 
-        <receiver android:name="com.cyanogenmod.settings.doze.DozeReceiver">
+        <receiver android:name="com.gestures.settings.device.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="cyanogenmod.intent.action.UPDATE_PREFERENCE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.cyanogenmod.settings.doze.DozeService"
-                 android:permission="XiaomiDozeService">
+        <service android:name="ServiceWrapper" android:permission="ServiceWrapper">
+            <intent-filter>
+                <action android:name="ServiceWrapper"/>
+            </intent-filter>
         </service>
 
         <activity
-            android:name=".DozeSettings"
-            android:label="@string/ambient_display_title"
-            android:theme="@style/DozeSettings">
+            android:name=".TouchscreenGesturePreferenceActivity"
+            android:label="@string/screen_gestures_panel_title"
+            android:theme="@style/Gestures">
             <intent-filter>
-                <action android:name="org.cyanogenmod.settings.device.DOZE_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <meta-data
-                android:name="org.cyanogenmod.settings.summary.receiver"
-                android:value="com.cyanogenmod.settings.doze.DozeReceiver" />
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.device" />
             <meta-data
-                android:name="org.cyanogenmod.settings.summary.key"
-                android:value="doze_device_settings" />
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_settings_gestures" />
         </activity>
 
     </application>
+
 </manifest>
