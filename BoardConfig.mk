@@ -169,7 +169,6 @@ TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.qcom
 # SELinux
 -include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
-BOARD_SECCOMP_POLICY := $(DEVICE_PATH)/seccomp
 
 # Video
 TARGET_HAVE_SIGNED_VENUS_FW := true
