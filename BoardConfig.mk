@@ -16,6 +16,7 @@
 #
 
 LOCAL_PATH := device/xiaomi/ido
+DEVICE_PATH := device/xiaomi/ido
 
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
@@ -166,8 +167,8 @@ BOARD_USES_QCOM_HARDWARE := true
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.qcom
 
 # SELinux
-#include device/qcom/sepolicy/sepolicy.mk
-#BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
+-include device/qcom/sepolicy/sepolicy.mk
+BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
 
 # Video
 TARGET_HAVE_SIGNED_VENUS_FW := true

@@ -15,23 +15,13 @@
 # limitations under the License.
 #
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-
-$(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-hwui-memory.mk)
-
-$(call inherit-product-if-exists, vendor/xiaomi/ido/ido-vendor.mk)
-
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
-
-# Boot animation
-TARGET_BOOTANIMATION_HALF_RES := true
-TARGET_SCREEN_HEIGHT := 1280
-TARGET_SCREEN_WIDTH := 720
+PRODUCT_AAPT_PREBUILT_DPI := xhdpi hdpi
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -68,8 +58,9 @@ PRODUCT_COPY_FILES += \
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
+    libantradio \
     com.dsi.ant.antradio_library \
-    libantradio
+    antradio_app
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -245,3 +236,28 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin \
     $(LOCAL_PATH)/wifi/WCNSS_wlan_dictionary.dat:system/etc/firmware/wlan/prima/WCNSS_wlan_dictionary.dat
+
+# for off charging mode
+PRODUCT_PACKAGES += \
+    charger_res_images
+
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+    e2fsck \
+    make_ext4fs \
+    setup_fs
+
+# Telephony packages
+PRODUCT_PACKAGES += \
+    ims-ext-common \
+    telephony-ext
+
+PRODUCT_BOOT_JARS += \
+    telephony-ext
+
+# setup dalvik vm and hwui configs.
+$(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
+$(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-hwui-memory.mk)
+
+$(call inherit-product, device/xiaomi/ido/utils.mk)
+

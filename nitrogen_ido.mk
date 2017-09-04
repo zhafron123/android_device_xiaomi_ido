@@ -14,30 +14,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
-# Inherit from ido device
-$(call inherit-product, device/xiaomi/ido/device.mk)
 
-# Inherit some common Nitrogen stuff.
-$(call inherit-product, vendor/nitrogen/products/common.mk)
+# Boot animation
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 720
 
 # Provide meaningful APN configuration
 PRODUCT_COPY_FILES := device/xiaomi/ido/configs/apns-full-conf.xml:system/etc/apns-conf.xml
 
+# Inherit from those products. Most specific first.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+
+# Inherit some common Nitrogen stuff.
+$(call inherit-product, vendor/nitrogen/products/common.mk)
+
 PRODUCT_NAME := nitrogen_ido
-BOARD_VENDOR := Xiaomi
-TARGET_VENDOR := Xiaomi
 PRODUCT_DEVICE := ido
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := Redmi 3
 PRODUCT_MANUFACTURER := Xiaomi
 
-PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+$(call inherit-product, device/xiaomi/ido/device.mk)
+$(call inherit-product-if-exists, vendor/xiaomi/ido/ido-vendor.mk)
 
 # Build fingerprint
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BUILD_FINGERPRINT="Xiaomi/ido/ido:5.1.1/LMY47V/V8.1.3.0.LAIMIDI:user/release-keys" \
     PRIVATE_BUILD_DESC="ido-user 5.1.1 LMY47V V8.1.3.0.LAIMIDI release-keys"
+
+# Assert
+TARGET_OTA_ASSERT_DEVICE := ido
